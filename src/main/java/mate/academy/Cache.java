@@ -5,8 +5,10 @@ import java.util.Map;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    private final ReentrantReadWriteLock.ReadLock readLock = new ReentrantReadWriteLock().readLock();
-    private final ReentrantReadWriteLock.WriteLock writeLock = new ReentrantReadWriteLock().writeLock();
+    private final ReentrantReadWriteLock.ReadLock readLock =
+            new ReentrantReadWriteLock().readLock();
+    private final ReentrantReadWriteLock.WriteLock writeLock =
+            new ReentrantReadWriteLock().writeLock();
     private Map<K, V> map = new HashMap<>();
     private volatile int size;
 
