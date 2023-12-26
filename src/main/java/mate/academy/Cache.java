@@ -10,7 +10,6 @@ public class Cache<K, V> {
     private final ReentrantReadWriteLock.WriteLock writeLock =
             new ReentrantReadWriteLock().writeLock();
     private Map<K, V> map = new HashMap<>();
-    private volatile int size;
 
     public V get(K key) {
         readLock.lock();
@@ -51,6 +50,6 @@ public class Cache<K, V> {
     }
 
     public int size() {
-        return size;
+        return map.size();
     }
 }
