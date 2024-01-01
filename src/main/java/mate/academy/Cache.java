@@ -14,7 +14,7 @@ public class Cache<K, V> {
         Lock readlock = lock.readLock();
         readlock.lock();
         try {
-           return cacheMap.get(key);
+            return cacheMap.get(key);
         } finally {
             readlock.unlock();
         }
