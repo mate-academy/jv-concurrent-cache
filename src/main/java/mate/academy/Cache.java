@@ -7,60 +7,38 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    private Map<K, V> cash = new HashMap<>();
-    private ReadWriteLock lock = new ReentrantReadWriteLock(true);
+    private Map<K, V> map = new HashMap<>();
+    private ReadWriteLock readWriteLock = new ReentrantReadWriteLock(true);
+    private Lock readLock = readWriteLock.readLock();
+    private Lock writeLock = readWriteLock.writeLock();
 
     public V get(K key) {
-        Lock readLock = lock.readLock();
         readLock.lock();
-        V element;
         try {
-            element = cash.get(key);
+            return map.get(key);
         } finally {
             readLock.unlock();
         }
-        return element;
     }
 
     public void put(K key, V value) {
-        Lock writeLock = lock.writeLock();
         writeLock.lock();
         try {
-            cash.put(key, value);
+            map.put(key, value);
         } finally {
             writeLock.unlock();
         }
     }
 
     public void remove(K key) {
-        Lock writeLock = lock.writeLock();
-        writeLock.lock();
-        try {
-            cash.remove(key);
-        } finally {
-            writeLock.unlock();
-        }
+        map.remove(key);
     }
 
     public void clear() {
-        Lock writeLock = lock.writeLock();
-        writeLock.lock();
-        try {
-            cash.clear();
-        } finally {
-            writeLock.unlock();
-        }
+        map.clear();
     }
 
     public int size() {
-        Lock readLock = lock.readLock();
-        readLock.lock();
-        int size;
-        try {
-            size = cash.size();
-        } finally {
-            readLock.unlock();
-        }
-        return size;
+        return map.size();
     }
 }
