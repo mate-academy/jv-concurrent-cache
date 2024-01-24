@@ -24,7 +24,7 @@ public class Cache<K, V> {
     public void put(K key, V value) {
         writeLock.lock();
         try {
-          map.put(key, value);
+            map.put(key, value);
         } finally {
             writeLock.unlock();
         }
