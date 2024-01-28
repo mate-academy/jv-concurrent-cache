@@ -6,14 +6,14 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    private ReadWriteLock lock = new ReentrantReadWriteLock();
-    private Map<K, V> cache = new HashMap<>();
+    private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Map<K, V> cache = new HashMap<>();
 
     public V get(K key) {
         lock.readLock().lock();
 
         try {
-           return cache.get(key);
+            return cache.get(key);
         } finally {
             lock.readLock().unlock();
         }
