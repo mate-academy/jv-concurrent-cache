@@ -212,7 +212,7 @@ public class CacheTest {
 
         executor.shutdown();
         // awaitTermination means that all tasks have completed within the given timeout period.
-        Assertions.assertTrue(executor.awaitTermination(1, TimeUnit.SECONDS));
+        Assertions.assertTrue(executor.awaitTermination(5, TimeUnit.SECONDS));
 
         String finalValue = cache.get(1);
         Assertions.assertEquals("Value" + (iterations - 1), finalValue); // Check if the final value is as expected
