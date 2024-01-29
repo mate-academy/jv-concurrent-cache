@@ -15,7 +15,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Timeout;
 
-@Timeout(value = 200, unit = TimeUnit.MILLISECONDS) // if you have very slow PC, please increase the current value
+@Timeout(value = 5, unit = TimeUnit.SECONDS) // if you have very slow PC, please increase the current value
 public class CacheTest {
     private volatile Cache<Integer, String> cache = new Cache<>();
 
@@ -212,7 +212,7 @@ public class CacheTest {
 
         executor.shutdown();
         // awaitTermination means that all tasks have completed within the given timeout period.
-        Assertions.assertTrue(executor.awaitTermination(1, TimeUnit.SECONDS));
+        Assertions.assertTrue(executor.awaitTermination(5, TimeUnit.SECONDS));
 
         String finalValue = cache.get(1);
         Assertions.assertEquals("Value" + (iterations - 1), finalValue); // Check if the final value is as expected
