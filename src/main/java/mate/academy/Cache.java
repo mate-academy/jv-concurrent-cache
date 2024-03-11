@@ -8,6 +8,7 @@ import java.util.concurrent.locks.ReentrantReadWriteLock;
 public class Cache<K, V> {
     private final Map<K, V> map = new HashMap<>();
     private final ReadWriteLock mutex = new ReentrantReadWriteLock();
+
     public V get(K key) {
         mutex.readLock().lock();
         try {
