@@ -1,57 +1,58 @@
 package mate.academy;
 
 import java.util.HashMap;
-import java.util.Map;
+import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    private final Map<K, V> cacheMap = new HashMap<>();
+    private final HashMap<K, V> cache = new HashMap<>();
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
+    private final Lock readLock = lock.readLock();
+    private final Lock writeLock = lock.writeLock();
+
     public V get(K key) {
-        lock.readLock();
+        readLock.lock();
         try {
-            return cacheMap.get(key);
+            return cache.get(key);
         } finally {
-            lock.readLock().unlock();
+            readLock.unlock();
         }
     }
 
     public void put(K key, V value) {
-        lock.writeLock();
+        writeLock.lock();
         try {
-            cacheMap.put(key, value);
+            cache.put(key, value);
         } finally {
-            lock.writeLock().unlock();
+            writeLock.unlock();
         }
     }
 
     public void remove(K key) {
-        lock.writeLock();
+        writeLock.lock();
         try {
-            cacheMap.remove(key);
+            cache.remove(key);
         } finally {
-            lock.writeLock().unlock();
+            writeLock.unlock();
         }
     }
 
     public void clear() {
-        lock.writeLock();
-        lock.readLock();
+        writeLock.lock();
         try {
-            cacheMap.clear();
+            cache.clear();
         } finally {
-            lock.writeLock().unlock();
-            lock.readLock().unlock();
+            writeLock.unlock();
         }
     }
 
     public int size() {
-        lock.readLock();
+        readLock.lock();
         try {
-            return cacheMap.size();
+            return cache.size();
         } finally {
-            lock.readLock().unlock();
+            readLock.unlock();
         }
     }
 }
