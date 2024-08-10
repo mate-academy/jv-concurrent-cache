@@ -6,8 +6,9 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    ReadWriteLock lock = new ReentrantReadWriteLock();
-    Map<K, V> cache = new HashMap<>();
+    private ReadWriteLock lock = new ReentrantReadWriteLock();
+    private Map<K, V> cache = new HashMap<>();
+
     public V get(K key) {
         lock.readLock().lock();
         try {
