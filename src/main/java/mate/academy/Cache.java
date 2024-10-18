@@ -48,6 +48,8 @@ public class Cache<K, V> {
             cacheMap.clear();
         } catch (RuntimeException e) {
             throw new RuntimeException("Something went wrong during clearing cache!");
+        } finally {
+            lock.writeLock().unlock();
         }
     }
 
