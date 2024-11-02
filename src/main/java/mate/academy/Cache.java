@@ -46,6 +46,11 @@ public class Cache<K, V> {
     }
 
     public int size() {
-        return cache.size();
+        lock.readLock().lock();
+        try {
+            return cache.size();
+        } finally {
+            lock.readLock().unlock();
+        }
     }
 }
