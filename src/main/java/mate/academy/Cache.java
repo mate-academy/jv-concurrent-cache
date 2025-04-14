@@ -11,36 +11,20 @@ public class Cache<K, V> {
     private Map<K,V> underlyingMap = new HashMap<>();
 
     public V get(K key) {
+        rwLock.readLock().lock();
         try {
-            if (rwLock.readLock().tryLock(3, TimeUnit.SECONDS)) {
-                try {
-                    return underlyingMap.get(key);
-                } finally {
-                    rwLock.readLock().unlock();
-                }
-            } else {
-                throw new RuntimeException();
-            }
-        } catch (InterruptedException ignored) {
-            throw new RuntimeException();
+            return underlyingMap.get(key);
+        } finally {
+            rwLock.readLock().unlock();
         }
     }
 
     public void put(K key, V value) {
+        rwLock.writeLock().lock();
         try {
-            if (rwLock.writeLock().tryLock(3, TimeUnit.SECONDS)) {
-                try {
-                    underlyingMap.put(key, value);
-                } catch (Exception e) {
-                    System.out.println("ex" + e);
-                } finally {
-                    rwLock.writeLock().unlock();
-                }
-            } else {
-                throw new RuntimeException();
-            }
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
+            underlyingMap.put(key, value);
+        } finally {
+            rwLock.writeLock().unlock();
         }
     }
 
