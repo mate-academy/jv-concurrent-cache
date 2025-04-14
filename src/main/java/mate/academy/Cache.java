@@ -7,8 +7,8 @@ import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 public class Cache<K, V> {
-    ReadWriteLock rwLock = new ReentrantReadWriteLock();
-    Map<K,V> underlyingMap = new HashMap<>();
+    private ReadWriteLock rwLock = new ReentrantReadWriteLock();
+    private Map<K,V> underlyingMap = new HashMap<>();
 
     public V get(K key) {
         try {
@@ -25,7 +25,6 @@ public class Cache<K, V> {
             throw new RuntimeException();
         }
     }
-
 
     public void put(K key, V value) {
         try {
