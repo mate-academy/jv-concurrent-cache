@@ -1,23 +1,55 @@
 package mate.academy;
 
+import java.util.HashMap;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
 public class Cache<K, V> {
+    private final ReadWriteLock readWriteLock = new ReentrantReadWriteLock();
+    private final HashMap<K, V> hashMap = new HashMap<>();
+
     public V get(K key) {
-        return null;
+        readWriteLock.readLock().lock();
+        try {
+            return hashMap.get(key);
+        } finally {
+            readWriteLock.readLock().unlock();
+        }
     }
 
     public void put(K key, V value) {
-
+        readWriteLock.writeLock().lock();
+        try {
+            hashMap.put(key, value);
+        } finally {
+            readWriteLock.writeLock().unlock();
+        }
     }
 
     public void remove(K key) {
-
+        readWriteLock.writeLock().lock();
+        try {
+            hashMap.remove(key);
+        } finally {
+            readWriteLock.writeLock().unlock();
+        }
     }
 
     public void clear() {
-
+        readWriteLock.writeLock().lock();
+        try {
+            hashMap.clear();
+        } finally {
+            readWriteLock.writeLock().unlock();
+        }
     }
 
     public int size() {
-        return -1;
+        readWriteLock.readLock().lock();
+        try {
+            return hashMap.size();
+        } finally {
+            readWriteLock.readLock().unlock();
+        }
     }
 }
