@@ -10,6 +10,7 @@ public class Cache<K, V> {
     private final Map<K, V> cacheMap = new HashMap<>();
 
     private final ReadWriteLock lock = new ReentrantReadWriteLock();
+
     public V get(K key) {
         lock.readLock().lock();
         try {
