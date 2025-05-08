@@ -14,6 +14,12 @@ public class Main {
         System.out.println(cache.get(2)); // Expected output: B
         System.out.println(cache.get(3)); // Expected output: null
 
+        // Removing element
+        cache.remove(2);
+
+        // Reading from cache
+        System.out.println(cache.get(2)); //Expected output: null
+
         // Clearing cache
         cache.clear();
 
