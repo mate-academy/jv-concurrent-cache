@@ -16,7 +16,8 @@ import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Timeout;
 
 @Timeout(value = 200, unit = TimeUnit.MILLISECONDS) // if you have very slow PC, please increase the current value
-public class CacheTest {
+public class
+CacheTest {
     private volatile Cache<Integer, String> cache = new Cache<>();
 
     @BeforeEach
