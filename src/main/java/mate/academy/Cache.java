@@ -20,12 +20,12 @@ public class Cache<K, V> {
     }
 
     public void put(K key, V value) {
-      lock.writeLock().lock();
-      try {
-          cache.put(key, value);
-      } finally {
-          lock.writeLock().unlock();
-      }
+        lock.writeLock().lock();
+        try {
+            cache.put(key, value);
+        } finally {
+            lock.writeLock().unlock();
+        }
     }
 
     public void remove(K key) {
@@ -49,7 +49,7 @@ public class Cache<K, V> {
     public int size() {
         lock.readLock().lock();
         try {
-          return cache.size();
+            return cache.size();
         } finally {
             lock.readLock().unlock();
         }
