@@ -9,7 +9,6 @@ public class Cache<K, V> {
     private Map<K, V> list = new ConcurrentHashMap<>();
     private ReadWriteLock lock = new ReentrantReadWriteLock();
 
-
     public V get(K key) {
         lock.readLock().lock();
         try {
